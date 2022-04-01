@@ -1,0 +1,56 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyCharm
+.idea/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+#mypython
+.installer/
+/resources/col_selection.txt
+/resources/energy_coef.txt
+/resources/mesh.txt
+/resources/model2.txt
+/resources/temp_iWT.txt
+/resources/temp_k.txt
+/resources/temp_kW.txt
+/resources/temp_kWforWT.txt
+/resources/temp_MotherWavelet.txt
+/resources/temp_paras.txt
+/resources/temp_WT.txt
+/resources/temp_WT_c.txt
+/resources/wavelet_fft.txt
