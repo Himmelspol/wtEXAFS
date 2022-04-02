@@ -1,13 +1,10 @@
 # wtEXAFS
 
-<hr>
-
 #### Version: 0.1.0
 
 #### Last update: 2022/04/02
 
 wtEXAFS is an Windows GUI for wavelet transformation of EXAFS
-<hr>
 
 ## Prerequisites
 
@@ -19,7 +16,6 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
 - numpy == 1.21.5
 - pywin32 == 303
 
-<hr>
 
 ## How to start
 
@@ -67,7 +63,6 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
     1. Download wtEXAFS-XXX.zip, unzip it, find wtEXAFS.exe in the folder and double-click to run
     2. Download wtEXAFS-XXX.exe, double-click to run (relatively slow)
 
-<hr>
 
 ## How to use
 
@@ -134,8 +129,6 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
   #### NOTICE:
     - If multi-column mode was usd, only one spectral result can be displayed at a time. And the user can choose which
       one to display
-
-<hr>
 
 ## About author
 
