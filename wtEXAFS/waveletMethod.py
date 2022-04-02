@@ -7,16 +7,13 @@ from cmath import sqrt
 from math import pi
 
 import numpy as np
-from numba import jit
 
 
-@jit(nopython=True, fastmath=True)
 def energyCoef(r: float, omega: float):
     energy_normalized = (2 * r / omega) ** 0.5  # 引入能量归一化参数
     return energy_normalized
 
 
-@jit(nopython=True, fastmath=True)
 def morletC(r: float, b: float, sigma: float, eta: float, k_value: float):
     i = complex(0, 1)
     t = 2 * r * (k_value - b) / eta
@@ -25,7 +22,6 @@ def morletC(r: float, b: float, sigma: float, eta: float, k_value: float):
     return morleti
 
 
-@jit(nopython=True, fastmath=True)
 def cauthyC(r: float, b: float, n: float, k_value: float):
     i = complex(0, 1)
     t = 2 * r * (k_value - b) / n
@@ -53,7 +49,6 @@ def cWT(wavelet, chi, energy_coef, dk: float):
     return w_abs, w_complex
 
 
-@jit(nopython=True, fastmath=True)
 def iWT(w_matrix, energy_coef, wavelet_coef, dr):
     # 目前仍不清楚为什么这个算法能生效，这个算法与实际公式并不一致
     row_limit = len(w_matrix)

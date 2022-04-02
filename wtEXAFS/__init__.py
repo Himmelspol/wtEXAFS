@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 
 """
-@author Ye Zhihang
+@author Zhihang Ye
 @contact: yezhihang@live.com
-@date 2022/03/31
+@date 2022/04/02
 ------------------ Description -----------------------
 This is a python GUI of wavelet transformation for EXAFS data.
 And The python version used is 3.7.
