@@ -1,8 +1,8 @@
 # wtEXAFS
 
-#### Version: 0.1.0
+#### Version: 0.1.1
 
-#### Last update: 2022/04/02
+#### Last update: 2022/04/03
 
 wtEXAFS is an Windows GUI for wavelet transformation of EXAFS
 
