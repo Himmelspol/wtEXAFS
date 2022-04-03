@@ -41,6 +41,7 @@ MANIFEST
 
 #mypython
 .installer/
+.guide/
 /resources/col_selection.txt
 /resources/energy_coef.txt
 /resources/mesh.txt

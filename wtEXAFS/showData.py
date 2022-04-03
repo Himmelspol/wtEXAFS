@@ -50,7 +50,7 @@ def showMotherWavelet():
     r_input = valueList("R").round(2)
     plt.close(2)
     fig_MW = plt.figure(2)
-    fig_MW.canvas.set_window_title('Plot of mother wavelet (real and imaginary part)')
+    fig_MW.canvas.set_window_title('Plot of mother wavelet')
     if tkinter.messagebox.showinfo(title="Tips",
                                    message="The user can enter different R to show different scaled wavelet"):
         input_r = tkinter.simpledialog.askfloat("Choose the R you want to show!",

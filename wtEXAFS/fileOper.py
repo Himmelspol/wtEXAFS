@@ -119,13 +119,13 @@ def mwConstruct(mw_type: str):
     r_input = valueList("R")
     wavelet_center = (para.Parameters.bmin + para.Parameters.bmax) / 2  # 为了能让小波基的中心与信号中心对齐，设定小波基的中心为信号区间中心
     # 这里构建的小波基为小波的复共轭（为了方便小波变换的运算），同时还获得了能量归一化系数和小波基的FFT结果
-    if mw_type == "cauthy":
-        wavelet_base = [[waveletMethod.cauthyC(r, wavelet_center, para.Parameters.n, k).conjugate() for k in k_input]
+    if mw_type == "cauchy":
+        wavelet_base = [[waveletMethod.cauchyC(r, wavelet_center, para.Parameters.n, k).conjugate() for k in k_input]
                         for r in
                         r_input]
         energy_coef = [waveletMethod.energyCoef(r, para.Parameters.n) for r in r_input]
         fft_freq, fft_amp, wavelet_coef = waveletMethod.fftWavelet(
-            [waveletMethod.cauthyC((para.Parameters.n / 2), wavelet_center, para.Parameters.n, k) for k in k_input],
+            [waveletMethod.cauchyC((para.Parameters.n / 2), wavelet_center, para.Parameters.n, k) for k in k_input],
             k_input)
     else:
         # 默认morlet小波

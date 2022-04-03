@@ -16,7 +16,6 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
 - numpy == 1.21.5
 - pywin32 == 303
 
-
 ## How to start
 
 - If `git` is existed, simply clone the repository:
@@ -63,7 +62,6 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
     1. Download wtEXAFS-XXX.zip, unzip it, find wtEXAFS.exe in the folder and double-click to run
     2. Download wtEXAFS-XXX.exe, double-click to run (relatively slow)
 
-
 ## How to use
 
 ### 1. Import chi(k) data
@@ -104,7 +102,7 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
 
 - Enter _kmin/kmax/dk_, _Rmin/Rmax/dR_ in the input box
 - Enter _Sigma/Eta_ in Morlet wavelet input box and then `Accept` it
-- Or Enter _n_ in Cauthy wavelet input box and then `Accept` it
+- Or Enter _n_ in Cauchy wavelet input box and then `Accept` it
 - Then the user can `Show wavelet`
   #### NOTICE:
     - _kmin_ and _kmax_ must be within the data range
@@ -133,12 +131,15 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
 ## About author
 
 Hi everyone, I am a beginner of XAFS and Python. Under the guidance of Prof. Peng Liu, I first came into contact with
-EXAFS in 2019.
+EXAFS in 2019. Currently, I am a master's student at China University of Geosciences (Wuhan), majoring in Environmental
+Science and Engineering.
+
+I noticed that there are not many GUI for EXAFS wavelet transformation yet. Thus, with the purpose of learning, I wrote
+this GUI and hope it can help others :)
 
 EXAFS is a powerful technique for detecting the local structure of different materials. Actually, EXAFS is a composite
 signal of electron waves, which is well suited for analysis using wavelet transform. Although it is difficult to gain
 quantitative results from wavelet transformation of EXAFS signal, wavelet transformation can still give more information
 to help us carry out k-space LCF, EXAFS modeling and so on.
 
-I noticed that there are not many GUI for EXAFS wavelet transformation yet. Thus, with the purpose of learning, I wrote
-this GUI and hope it can help others :)
+

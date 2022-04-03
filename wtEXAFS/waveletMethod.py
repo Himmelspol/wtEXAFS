@@ -22,11 +22,11 @@ def morletC(r: float, b: float, sigma: float, eta: float, k_value: float):
     return morleti
 
 
-def cauthyC(r: float, b: float, n: float, k_value: float):
+def cauchyC(r: float, b: float, n: float, k_value: float):
     i = complex(0, 1)
     t = 2 * r * (k_value - b) / n
-    cauthyi = pow(exp(log(i / (i + t))), (n + 1))
-    return cauthyi
+    cauchyi = pow(exp(log(i / (i + t))), (n + 1))
+    return cauchyi
 
 
 def cWT(wavelet, chi, energy_coef, dk: float):

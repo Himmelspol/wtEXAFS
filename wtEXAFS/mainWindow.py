@@ -21,7 +21,7 @@ class MainWindow:
         LOGO_PATH = path.getResourcePath(os.path.join("resources", "logo.ico"))  # LOGO的文件路径
         path.deleteTempFiles()
         self.root = tkinter.Tk()  # 创建一个窗体
-        self.root.title("Wavelet Transformation for EXAFS")  # 设置标题
+        self.root.title("wtEXAFS")  # 设置标题
         self.root.iconbitmap(LOGO_PATH)  # 设置LOGO资源
         self.root.geometry("480x480+500+100")  # 设置初始化窗体尺寸
         self.root.resizable(False, False)  # 锁定窗体尺寸
@@ -97,7 +97,7 @@ class MainWindow:
         # --------- k weight的选择 ---------
         self.kWeight = [("0", 0), ("1", 1), ("2", 2), ("3", 3)]
         self.kWeight_var = tkinter.IntVar()
-        self.kWeight_label = tkinter.Label(self.data_kWeight, text="k weight:", font=("Calibri", 11))
+        self.kWeight_label = tkinter.Label(self.data_kWeight, text="k-weight:", font=("Calibri", 11))
         self.kWeight_label.grid(column=0, row=0, padx=10)
         for text, num in self.kWeight:
             self.kWeight_radio = tkinter.Radiobutton(self.data_kWeight, variable=self.kWeight_var,
@@ -180,7 +180,7 @@ class MainWindow:
         self.morlet_choice = tkinter.Frame(self.mother_wavelet_choice, width=320, height=45)
         self.cauchy_choice = tkinter.Frame(self.mother_wavelet_choice, width=320, height=45)
         self.mother_wavelet_choice.add(self.morlet_choice, text="Morlet Wavelet")
-        self.mother_wavelet_choice.add(self.cauchy_choice, text="Cauthy Wavelet (in test)")
+        self.mother_wavelet_choice.add(self.cauchy_choice, text="Cauchy Wavelet (in test)")
         self.mother_wavelet_choice.pack(side="top")
         # --------- 小波界面设置（k） ---------
         self.kmin_label = tkinter.Label(self.k_user, text="kmin:", font=("Calibri", 11))
@@ -242,7 +242,7 @@ class MainWindow:
                                      justify="left", font=("Calibri", 11),
                                      validate="key", vcmd=(testfloat, '%P', '%v', '%W'))
         self.get_cPara = tkinter.Button(self.cauchy_choice, text="Accept", width=10,
-                                        state="disabled", font=("Calibri", 10), command=lambda: acceptMW("cauthy"))
+                                        state="disabled", font=("Calibri", 10), command=lambda: acceptMW("cauchy"))
         self.n_label.pack(side="left", padx=10, pady=8)
         self.n_input.pack(side="left", pady=8)
         self.get_cPara.pack(side="right", padx=10, pady=5)
