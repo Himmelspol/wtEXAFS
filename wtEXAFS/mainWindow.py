@@ -35,7 +35,6 @@ class MainWindow:
         self.showDataMoudle("disabled")
         self.showMotherWaveletMoudle("disabled")
         self.WaveletTransMoudle("disabled")
-        tools.messagesOrError("readTips")
         # --------------------- 窗体关闭事件 ---------------------
         self.root.protocol("WM_DELETE_WINDOW", self.closeHandle)
         # --------------------- 窗口显示 ---------------------
@@ -366,27 +365,28 @@ class MainWindow:
             self.buttonA1_show.config(state="normal")
             self.buttonA1_next.config(state="normal")
             self.singleFile_menu.entryconfig("Save mother wavelet config", state="disabled")
+            self.singleFile_menu.entryconfig("Save Wavelet Transformation result as txt", state="disabled")
             self.saveMW_config.config(state="disabled")
             self.showMW.config(state="disabled")
             self.get_mPara.config(state="disabled")
             self.get_cPara.config(state="disabled")
+            self.wt_start.config(state="disabled")
             self.wt_show.config(state="disabled")
             self.wt_save.config(state="disabled")
+            self.iwt_start.config(state="disabled")
             self.iwt_show.config(state="disabled")
             self.iwt_save.config(state="disabled")
         elif note == "nextStepForMW":
+            self.buttonA1_next.config(state="disabled")
+            self.singleFile_menu.entryconfig("Open k-space EXAFS data", state="disabled")
+            self.singleFile_menu.entryconfig("Open k-space model EXAFS data", state="disabled")
             self.singleFile_menu.entryconfig("Open mother wavelet config", state="normal")
+            self.multipleFile_menu.entryconfig("Open multiple column chi(k) data Set (ATHENA file)", state="disabled")
             self.buttonA1_accept.config(state="disabled")
             self.buttonA2_replace.config(state="disabled")
             self.get_mPara.config(state="normal")
             self.get_cPara.config(state="normal")
             self.openMW_config.config(state="normal")
-            self.showMW.config(state="disabled")
-            self.buttonA1_next.config(state="disabled")
-            self.wt_show.config(state="disabled")
-            self.wt_save.config(state="disabled")
-            self.iwt_show.config(state="disabled")
-            self.iwt_save.config(state="disabled")
         elif note == "acceptMotherW":
             self.singleFile_menu.entryconfig("Open mother wavelet config", state="disabled")
             self.singleFile_menu.entryconfig("Save mother wavelet config", state="normal")
@@ -398,9 +398,13 @@ class MainWindow:
             self.wt_start.config(state="normal")
             self.wt_show.config(state="disabled")
             self.wt_save.config(state="disabled")
+            self.iwt_start.config(state="disabled")
             self.iwt_show.config(state="disabled")
             self.iwt_save.config(state="disabled")
         elif note == "wtStart":
+            self.singleFile_menu.entryconfig("Open k-space EXAFS data", state="normal")
+            self.singleFile_menu.entryconfig("Open k-space model EXAFS data", state="normal")
+            self.multipleFile_menu.entryconfig("Open multiple column chi(k) data Set (ATHENA file)", state="normal")
             self.singleFile_menu.entryconfig("Save Wavelet Transformation result as txt", state="normal")
             self.buttonA1_accept.config(state="normal")
             self.buttonA2_replace.config(state="normal")
@@ -441,20 +445,20 @@ class MainWindow:
     def openData(self):
         with subWindow.OpenSDataWindow(path.getPath("singleData"), "singleData") as file_name:
             para.Parameters.file_name = file_name
-            self.bottonSet("openData")
+        self.bottonSet("openData")
 
     # --------- 打开预设数据文件 ---------
     def openModelData(self):
         with subWindow.OpenSDataWindow(path.getResourcePath(os.path.join("resources", "model.txt")),
                                        "singleData") as file_name:
             para.Parameters.file_name = file_name
-            self.bottonSet("openData")
+        self.bottonSet("openData")
 
     # --------- 打开并选择多列数据文件 ---------
     def openMultipleColumn(self):
         with subWindow.OpenSDataWindow(path.getPath("multipleData"), "multipleData") as file_name:
             para.Parameters.file_name = file_name + "_MULTIPLE"
-            self.bottonSet("openData")
+        self.bottonSet("openData")
 
     # --------- 打开parameter配置文件并刷新输入框 ---------
     def reflashParaconfig(self):
