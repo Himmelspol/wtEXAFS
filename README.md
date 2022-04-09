@@ -55,14 +55,16 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
 #### 2. Start from Windows executable file (.exe):
 
 - Download the packaged files from (one of the three):
-    1. Baidu cloud: https://pan.baidu.com/s/1tvUyJV1Vec3nzR2bw19wLw  code:m8o4
-    2. MEGA: https://mega.nz/folder/wMgnRCAD#Jv1gsYz5vHrjq1Nprh6VJA
-    3. Google drive: https://drive.google.com/drive/folders/1wctfzMaA-KoCo6_diqWzBwc80WCeka35?usp=sharing
+  1. Baidu cloud: https://pan.baidu.com/s/1tvUyJV1Vec3nzR2bw19wLw  code:m8o4
+  2. MEGA: https://mega.nz/folder/wMgnRCAD#Jv1gsYz5vHrjq1Nprh6VJA
+  3. Google drive: https://drive.google.com/drive/folders/1wctfzMaA-KoCo6_diqWzBwc80WCeka35?usp=sharing
 - There are two types of file on the cloud:
-    1. Download wtEXAFS-XXX.zip, unzip it, find wtEXAFS.exe in the folder and double-click to run
-    2. Download wtEXAFS-XXX.exe, double-click to run (relatively slow)
+  1. Download wtEXAFS-XXX.zip, unzip it, find wtEXAFS.exe in the folder and double-click to run
+  2. Download wtEXAFS-XXX.exe, double-click to run (relatively slow)
 
 ## How to use
+
+See guide_for_wtEXAFS.pdf for more details.
 
 ### 1. Import chi(k) data
 

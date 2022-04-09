@@ -2,7 +2,6 @@
 
 import re
 import tkinter
-from tkinter import *
 
 import numpy as np
 
@@ -19,17 +18,20 @@ class OpenSDataWindow:
 
     # --------- 构造方法里面进行窗体的控制 ---------
     def __init__(self, path_name, open_type: str):
+        path.deleteTempFiles()  # 首先删除所有临时文件
         self.data_show = tkinter.Toplevel()
         self.data_show.title("Column selection")
         self.data_show.geometry("700x300")
         self.data_show.resizable(False, False)
         # --------- 加载数据导入模块 ---------
-        self.path_name = path_name
-        self.dataLoadModule(self.path_name, open_type)
+        self.path_name = fileOper.getFileName(path_name)
+        self.dataLoadModule(path_name, open_type)
 
     def __enter__(self):
-        file_name = fileOper.getFileName(self.path_name)
-        return file_name
+        return self.path_name
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        return True
 
     # --------- 数据导入模块 ---------
     def dataLoadModule(self, path_name: str, open_type: str):
@@ -81,10 +83,10 @@ class OpenSDataWindow:
                                                font=("Calibri", 10), command=lambda: refreshBox())
         self.putDataToMain_button = tkinter.Button(self.botton_frame, text="Continue and close this window",
                                                    font=("Calibri", 10), state="disabled",
-                                                   command=lambda: putDataToMain())
+                                                   command=self.data_show.destroy)
         # --------- 数据展示模块Text ---------
         self.yScrolledBar = tkinter.Scrollbar(self.show_frame)
-        self.xScrolledBar = tkinter.Scrollbar(self.show_frame, orient=HORIZONTAL)
+        self.xScrolledBar = tkinter.Scrollbar(self.show_frame, orient="horizontal")
         self.show_scrolledBox = tkinter.Text(self.show_frame, font=("Times New Roman", 8),
                                              relief="sunken", wrap="none",
                                              yscrollcommand=self.yScrolledBar.set,
@@ -108,9 +110,8 @@ class OpenSDataWindow:
         self.yScrolledBar.config(command=self.show_scrolledBox.yview)
         self.xScrolledBar.config(command=self.show_scrolledBox.xview)
         # --------- 数据展示事件 ---------
-        showData.showTextInBox(self, fileOper.loadText(path_name))
+        showData.showTextInBox(self, data_content)
 
-        # --------- 本模块按钮组方法定义 ---------
         # --------- 根据输入刷新显示模块 ---------
         def refreshBox():
             col_num = map(int, re.findall(r'\d+', self.chikValue.get()))  # 提取输入中所有的数字
@@ -130,11 +131,4 @@ class OpenSDataWindow:
                 np.savetxt(path.TempPath.get('col_selection'), col_num, fmt='%d', delimiter=" ")
                 self.putDataToMain_button.config(state="normal")
                 print("1. Column selection success!")
-
-        # --------- 窗口关闭 ---------
-        def putDataToMain():
-            self.data_show.destroy()
-            print("2. Data import success!")
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        return True
+                print("2. Data import success!")

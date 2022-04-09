@@ -2,7 +2,7 @@
 
 import os
 import tkinter  # 导入相关窗体模块
-import tkinter.scrolledtext  # 滚动文本框
+import tkinter.messagebox
 from shutil import copy
 from tkinter.ttk import Notebook
 
@@ -32,9 +32,9 @@ class MainWindow:
         self.root_frame = tkinter.Frame(self.root, width=480, bg="#897956")
         self.root_frame.pack(fill="x", side="top")
         # --------------------- 主窗体模块导入（导入时处于未响应状态） ---------------------
-        self.showDataMoudle("disabled")
-        self.showMotherWaveletMoudle("disabled")
-        self.WaveletTransMoudle("disabled")
+        self.showDataMoudle()
+        self.showMotherWaveletMoudle()
+        self.WaveletTransMoudle()
         # --------------------- 窗体关闭事件 ---------------------
         self.root.protocol("WM_DELETE_WINDOW", self.closeHandle)
         # --------------------- 窗口显示 ---------------------
@@ -73,7 +73,7 @@ class MainWindow:
         self.root.config(menu=self.menu)
 
     # --------- 主窗口中数据载入模块的布局 ---------
-    def showDataMoudle(self, statetype: str):
+    def showDataMoudle(self):
         # --------- 在主窗口建立frame ---------
         self.root_dataFrame = tkinter.Frame(self.root_frame, width=480, height=160,
                                             relief="sunken", borderwidth=2)
@@ -90,7 +90,7 @@ class MainWindow:
         para.Parameters.file_name = tkinter.StringVar()
         self.name_label = tkinter.Label(self.data_name, text="File name:", font=("Calibri", 11))
         self.name_box = tkinter.Entry(self.data_name, textvariable=para.Parameters.file_name, justify="left",
-                                      width=50, font=("Calibri", 11), state=statetype, bg="white")
+                                      width=50, font=("Calibri", 11), state="disabled", bg="white")
         self.name_label.pack(side="left", padx=5, pady=5)
         self.name_box.pack(side="left", pady=5)
         # --------- k weight的选择 ---------
@@ -103,11 +103,11 @@ class MainWindow:
                                                      text=text, value=num, font=("Calibri", 11))
             self.kWeight_radio.grid(column=num + 1, row=0, padx=5)
         # --------- buttonA1组件（accept/show/next） ---------
-        self.buttonA1_accept = tkinter.Button(self.data_buttonA1, text="Accept k-weight", state=statetype, width=15,
+        self.buttonA1_accept = tkinter.Button(self.data_buttonA1, text="Accept k-weight", state="disabled", width=15,
                                               font=("Calibri", 11), command=lambda: kWeightAccept())
-        self.buttonA1_show = tkinter.Button(self.data_buttonA1, text="Show k-weighted data", state=statetype, width=18,
+        self.buttonA1_show = tkinter.Button(self.data_buttonA1, text="Show k-weighted data", state="disabled", width=18,
                                             font=("Calibri", 11), command=lambda: showData.showKWeighted())
-        self.buttonA1_next = tkinter.Button(self.data_buttonA1, text="Next step", state=statetype, width=12,
+        self.buttonA1_next = tkinter.Button(self.data_buttonA1, text="Next step", state="disabled", width=12,
                                             font=("Calibri", 11), command=lambda: nextStepForMW())
         self.buttonA1_accept.grid(column=0, row=0, padx=15, pady=5)
         self.buttonA1_show.grid(column=1, row=0, padx=15, pady=5)
@@ -117,7 +117,7 @@ class MainWindow:
                                             state="normal", command=self.openData,
                                             font=("Calibri", 11), width=20)
         self.buttonA2_replace = tkinter.Button(self.data_buttonA2, text="Replace k-space data",
-                                               state=statetype, command=self.openData,
+                                               state="disabled", command=self.openData,
                                                font=("Calibri", 11), width=20)
         self.buttonA2_open.pack(side="left", expand=1, padx=5, pady=8)
         self.buttonA2_replace.pack(side="right", expand=1, padx=5, pady=8)
@@ -125,9 +125,15 @@ class MainWindow:
         # --------- 本模块按钮组方法定义（buttonA1) ---------
         # --------- k Weight数据接收与文件刷新 ---------
         def kWeightAccept():
-            fileOper.createkWData(self.kWeight_var.get())
-            self.bottonSet("kWeightAccept")
-            print("3. k-weight value accepted!")
+            if os.path.exists(path.TempPath.get("k")):
+                print("3. k-weight value accepted!")
+                fileOper.createkWData(self.kWeight_var.get())
+                self.bottonSet("kWeightAccept")
+            else:
+                tools.messagesOrError("data import failed")
+                self.buttonA1_accept.config(state="disabled")
+                self.buttonA2_open.config(state="normal")
+                self.buttonA2_replace.config(state="disabled")
 
         # --------- 进入小波配置的下一步 ---------
         def nextStepForMW():
@@ -146,7 +152,7 @@ class MainWindow:
             print("4. Now you can type in parameters!")
 
     # --------- 主窗口中母小波构建模块的布局 ---------
-    def showMotherWaveletMoudle(self, statetype: str):
+    def showMotherWaveletMoudle(self):
         # --------- 包装后面用到的检测浮点数的函数 ---------
         testfloat = self.root_frame.register(tools.testFloat)
         # --------- 需要获得的参数 ---------
@@ -247,18 +253,17 @@ class MainWindow:
         self.get_cPara.pack(side="right", padx=10, pady=5)
         # --------- 按钮组布局 ---------
         self.openMW_config = tkinter.Button(self.bottonB, text="Open config", width=15,
-                                            state=statetype, font=("Calibri", 11), command=self.reflashParaconfig)
+                                            state="disabled", font=("Calibri", 11), command=self.reflashParaconfig)
         self.saveMW_config = tkinter.Button(self.bottonB, text="Save config", width=15,
-                                            state=statetype, font=("Calibri", 11),
+                                            state="disabled", font=("Calibri", 11),
                                             command=self.saveParaconfig)
         self.showMW = tkinter.Button(self.bottonB, text="Show wavelet", width=15,
-                                     state=statetype, font=("Calibri", 11),
+                                     state="disabled", font=("Calibri", 11),
                                      command=lambda: showData.showMotherWavelet())
         self.openMW_config.pack(side="top", padx=10, pady=10)
         self.saveMW_config.pack(side="top", padx=10, pady=10)
         self.showMW.pack(side="top", padx=10, pady=10)
 
-        # --------- 本模块按钮组方法定义（mother_wavelet_choice) ---------
         # --------- 小波配置的接受与临时保存 ---------
         def acceptMW(type_name: str):
             kmin = self.kmin.get()
@@ -272,6 +277,7 @@ class MainWindow:
             norder = self.n.get()
             # --------- 判断输入是否合理 ---------
             if tools.testKRInput(kmin, kmax, deltak, rmin, rmax, deltar, sigma, eta, norder):
+                print("5. Parameters accepted!")
                 # --------- 保存config临时文件 ---------
                 fileOper.saveConfig()
                 # --------- 创建用户定义的临时数据集 ---------
@@ -279,16 +285,15 @@ class MainWindow:
                 # --------- 根据用户需求创建小波基 ---------
                 fileOper.mwConstruct(type_name)
                 # --------- 按钮组状态更新 ---------
+                print("6. Wavelet transformation is available!")
                 self.bottonSet("acceptMotherW")
                 # --------- 弹出窗口 ---------
                 tools.messagesOrError("configAccepted")
-                print("5. Parameters accepted, you can start wavelet transformation!")
             else:
                 tools.messagesOrError("inputOut")
-                pass
 
     # --------- 主窗口中小波变换模块的布局 ---------
-    def WaveletTransMoudle(self, stateIn: str):
+    def WaveletTransMoudle(self):
         # --------- 在主窗口空间中建立frame ---------
         self.root_WTFrame = tkinter.Frame(self.root_frame, width=480, height=120,
                                           relief="sunken", borderwidth=2)
@@ -330,17 +335,15 @@ class MainWindow:
         # --------- 开始morlet小波变换并创建临时txt文件 ---------
         def wtStart():
             self.wt_start.config(state="disabled")
-            tools.messagesOrError("calculationInProgress")
             fileOper.waveleTransformation()
             tools.messagesOrError("calculationDone")
             # --------- 按钮组更新 ---------
+            print("7. Wavelet transformation completed!")
             self.bottonSet("wtStart")
-            print("6. Wavelet transformation completed!")
 
         # --------- 开始小波的逆变换并创建临时txt文件 ---------
         def iwtStart():
             self.iwt_start.config(state="disabled")
-            tools.messagesOrError("calculationInProgress")
             fileOper.inverseWaveleTransformation()
             tools.messagesOrError("calculationDone")
             # --------- 按钮组更新 ---------
@@ -372,7 +375,6 @@ class MainWindow:
             self.iwt_start.config(state="disabled")
             self.iwt_show.config(state="disabled")
             self.iwt_save.config(state="disabled")
-            path.deleteTempFiles()
         elif note == "kWeightAccept":
             self.buttonA1_show.config(state="normal")
             self.buttonA1_next.config(state="normal")
@@ -455,22 +457,24 @@ class MainWindow:
 
     # --------- 打开数据文件 ---------
     def openData(self):
-        with subWindow.OpenSDataWindow(path.getPath("singleData"), "singleData") as file_name:
+        PATH = path.getPath("singleData")
+        with subWindow.OpenSDataWindow(PATH, "singleData") as file_name:
             para.Parameters.file_name = file_name
-        self.bottonSet("openData")
+            self.bottonSet("openData")
 
     # --------- 打开预设数据文件 ---------
     def openModelData(self):
-        with subWindow.OpenSDataWindow(path.getResourcePath(os.path.join("resources", "model.txt")),
-                                       "singleData") as file_name:
+        PATH = path.getResourcePath(os.path.join("resources", "model.txt"))
+        with subWindow.OpenSDataWindow(PATH, "singleData") as file_name:
             para.Parameters.file_name = file_name
-        self.bottonSet("openData")
+            self.bottonSet("openData")
 
     # --------- 打开并选择多列数据文件 ---------
     def openMultipleColumn(self):
-        with subWindow.OpenSDataWindow(path.getPath("multipleData"), "multipleData") as file_name:
+        PATH = path.getPath("multipleData")
+        with subWindow.OpenSDataWindow(PATH, "multipleData") as file_name:
             para.Parameters.file_name = file_name + "_MULTIPLE"
-        self.bottonSet("openData")
+            self.bottonSet("openData")
 
     # --------- 打开parameter配置文件并刷新输入框 ---------
     def reflashParaconfig(self):
@@ -490,6 +494,7 @@ class MainWindow:
         para.Parameters.dk = para_load[11]
         # --------- 展示读入的参数 ---------
         self.showPara()
+        tools.messagesOrError("config import")
 
     # --------- 保存parameter配置文件 ---------
     def saveParaconfig(self):

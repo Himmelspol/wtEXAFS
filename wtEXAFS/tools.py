@@ -94,23 +94,23 @@ def testKRInput(kmin: float, kmax: float, deltak: float, rmin: float, rmax: floa
 
 # ----------- 错误汇总 -----------
 def messagesOrError(error_type: str):
-    if error_type == "readTips":
-        tkinter.messagebox.showinfo(title="Tips!", message="Please read help first!")
-    if error_type == "inputOut":
+    if error_type == "configAccepted":
+        tkinter.messagebox.showinfo(title="Tips!", message="The config was accepted successfully!")
+    elif error_type == "calculationDone":
+        tkinter.messagebox.showinfo(title="Tips!", message="Calculation completed!")
+    elif error_type == "config import":
+        tkinter.messagebox.showinfo(title="Tips!", message="Config imported!")
+    elif error_type == "inputOut":
         tkinter.messagebox.showwarning(title="Error!",
                                        message="The input of kmin/kmax/dk/Rmin/Rmax/dR were out of range!")
-    elif error_type == "configAccepted":
-        tkinter.messagebox.showinfo(title="Tips!", message="The config was accepted successfully!")
-    elif error_type == "motherWaveletConstructed":
-        tkinter.messagebox.showinfo(title="Tips!",
-                                    message="Wavelet bases with user-defined parameters were constructed！")
-    elif error_type == "calculationInProgress":
-        tkinter.messagebox.showinfo(title="Tips!", message="Calculation in progress! Please wait for a moment")
-    elif error_type == "calculationDone":
-        tkinter.messagebox.showinfo(title="Tips!", message="Calculation complete!")
     elif error_type == "selectionOut":
         tkinter.messagebox.showwarning(title="Error!", message="Column or row selection were out of range!")
+    elif error_type == "data import failed":
+        tkinter.messagebox.showwarning(title="Error!", message="Data import failed, please try again!")
     elif error_type == "about":
         tkinter.messagebox.showinfo(title="About!",
-                                    message="By Ye Zhihang @ China University of Geosciences (Wuhan)" + "\n" + "E-mail: yezhihang@live.com" +
-                                            "\n" + "Python version 3.7")
+                                    message="Author: Zhihang Ye " + "\n" +
+                                            "School: China University of Geosciences (Wuhan)" + "\n" +
+                                            "E-mail: yezhihang@live.com" + "\n" +
+                                            "Python version: 3.7.9 (Windows 64-bit)" + "\n" +
+                                            "Github: https://github.com/Himmelspol/wtEXAFS.git")
