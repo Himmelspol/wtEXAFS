@@ -54,7 +54,7 @@ It is noted that wtEXAFS needs to run on **Windows 10 (x64)**.
 - Install requirements if necessary
 - Run "main.py" in the root directory to use the GUI
 
-### 2. Start from Windows executable file (.exe):
+### Start from Windows executable file (.exe):
 
 - Download the packaged files from (one of the three):
   1. Google drive: https://drive.google.com/drive/folders/1wctfzMaA-KoCo6_diqWzBwc80WCeka35?usp=sharing
