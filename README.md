@@ -18,20 +18,15 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
 
 ## How to start
 
+It is noted that wtEXAFS needs to run on **Windows 10 (x64)**.
+
+### For python users
+
 - If `git` is existed, simply clone the repository:
 
       git clone https://github.com/Himmelspol/wtEXAFS.git
 
 - Otherwise, download the ZIP file of the repository and unzip it.
-
-### For PyCharm
-
-- Open the project "wtEXAFS"
-- Set python interpreter (python version: >= 3.7.9)
-- Install requirements if necessary
-- Run "main.py" in the root directory to use the GUI
-
-### For no python
 
 #### 1. Start from Python
 
@@ -52,12 +47,19 @@ It is highly recommended to create a new environment in `PyCharm` to run wtEXAFS
 
        python main.py  
 
-#### 2. Start from Windows executable file (.exe):
+#### 2. Start from PyCharm
+
+- Open the project "wtEXAFS"
+- Set python interpreter (python version: >= 3.7.9)
+- Install requirements if necessary
+- Run "main.py" in the root directory to use the GUI
+
+### 2. Start from Windows executable file (.exe):
 
 - Download the packaged files from (one of the three):
-  1. Baidu cloud: https://pan.baidu.com/s/1tvUyJV1Vec3nzR2bw19wLw  code:m8o4
+  1. Google drive: https://drive.google.com/drive/folders/1wctfzMaA-KoCo6_diqWzBwc80WCeka35?usp=sharing
   2. MEGA: https://mega.nz/folder/wMgnRCAD#Jv1gsYz5vHrjq1Nprh6VJA
-  3. Google drive: https://drive.google.com/drive/folders/1wctfzMaA-KoCo6_diqWzBwc80WCeka35?usp=sharing
+  3. Baidu cloud: https://pan.baidu.com/s/1tvUyJV1Vec3nzR2bw19wLw  code:m8o4
 - There are two types of file on the cloud:
   1. Download wtEXAFS-XXX.zip, unzip it, find wtEXAFS.exe in the folder and double-click to run
   2. Download wtEXAFS-XXX.exe, double-click to run (relatively slow)
@@ -143,5 +145,26 @@ EXAFS is a powerful technique for detecting the local structure of different mat
 signal of electron waves, which is well suited for analysis using wavelet transform. Although it is difficult to gain
 quantitative results from wavelet transformation of EXAFS signal, wavelet transformation can still give more information
 to help us carry out k-space LCF, EXAFS modeling and so on.
+
+## References
+
+1. Ravel B. and Newville M. (2005) ATHENA, ARTEMIS, HEPHAESTUS: Data analysis for X-ray absorption spectroscopy using
+   IFEFFIT. J. Synchrotron Radiat. 12, 537–541.
+2. Munoz M., Argoul P. and Farges F. (2003) Continuous cauchy wavelet transform analyses of EXAFS spectra: A qualitative
+   approach. Am. Mineral. 88, 694–700.
+3. Funke H., Scheinost A. C. and Chukalina M. (2005) Wavelet analysis of extended x-ray absorption fine structure data.
+   Phys. Rev. B - Condens. Matter Mater. Phys. 71, 1–7.
+4. Funke H., Chukalina M. and Scheinost A. C. (2007) A new FEFF-based wavelet for EXAFS data analysis. J. Synchrotron
+   Radiat. 14, 426–432.
+5. Timoshenko J. and Kuzmin A. (2009) Wavelet data analysis of EXAFS spectra. Comput. Phys. Commun. 180, 920–925.
+6. Xia Z., Zhang H., Shen K., Qu Y. and Jiang Z. (2018) Wavelet analysis of extended X-ray absorption fine structure
+   data: Theory, application. Phys. B Condens. Matter 542, 12–19.
+7. Arts L. P. A. and van den Broek E. L. (2022) The fast continuous wavelet transformation (fCWT) for real-time,
+   high-quality, noise-resistant time–frequency analysis. Nat. Comput. Sci. 2, 47–58.
+8. https://www.esrf.fr/UsersAndScience/Experiments/CRG/BM20/Software/Wavelets
+9. http://perso.u-pem.fr/farges/wav/
+10. https://github.com/hellozhaoming/wtexfas
+11. https://github.com/wangmiaoX/wavelet-transform-exafs
+12. http://en.volupedia.org/wiki/Convolution
 
 
