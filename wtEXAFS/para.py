@@ -3,7 +3,7 @@
 # ----------- 输入参数 -----------
 class Parameters:
     file_name = ""
-    kmin = 0.00  # kmin (wave number) in dataset
+    kmin = 0  # kmin (wave number) in dataset
     kmax = 10.00  # kmax in dataset
     dk = 0.05  # step size of k in dataset
     bmin = 0.00  # when user change the kmin/kmax/dk, they actually change bmin/bmax/db
@@ -11,7 +11,7 @@ class Parameters:
     db = 0.05
     Rmin = 0.50  # Rmin (R of FT EXAFS)
     Rmax = 4.00  # Rmax
-    dR = 0.05  # step size of R (user-defined)
+    dR = 0.053  # step size of R (Nyquist frequency according to k-range, dR = pi/(2*k-range))
     sigma = 1.0  # the half-width of Gaussian envelope for morlet wavelet
     eta = 10.0  # the frequency of the sine and cosine functions for morlet wavelet
     n = 100  # Cauchy wavelet parameter

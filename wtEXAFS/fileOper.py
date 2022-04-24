@@ -76,13 +76,9 @@ def saveConfig():
 # --------- 返回根据para中设定的k/R序列 ---------
 def valueList(type_name: str):
     if type_name == "k+" or type_name == "b+":
-        # 为了更高的低r分辨率，将k的取值外拓正负8的区间，k+只用于获得小波基，不更改用户定义的k序列区间
-        value_list = np.arange(para.Parameters.bmin - 8.0,
-                               para.Parameters.bmax + 8.0 + para.Parameters.db,
-                               para.Parameters.db)
-    elif type_name == "k" or type_name == "k":
-        value_list = np.arange(para.Parameters.bmin,
-                               para.Parameters.bmax + para.Parameters.db,
+        # 为了更高的低r分辨率，将k的取值外拓正负10的区间，k+只用于获得小波基，不更改用户定义的k序列区间
+        value_list = np.arange(para.Parameters.bmin - 10.0,
+                               para.Parameters.bmax + 10.0 + para.Parameters.db,
                                para.Parameters.db)
     elif type_name == "R" or type_name == "a":
         value_list = np.arange(para.Parameters.Rmin,
@@ -99,14 +95,15 @@ def createkWforWT():
     ori_data = np.loadtxt(path.TempPath.get('kW'), skiprows=0)
     col_limits = ori_data.shape[1]
     ori_k = ori_data[:, 0]
-    new_k = valueList("k")
+    # 根据用户定义的k区间定义窗函数框
+    window = waveletMethod.windowFunction(ori_k, para.Parameters.bmin, para.Parameters.bmax, 0.5)
     polished_k = valueList("k+")
     final_data = polished_k
     new_chikW = []
     adp = new_chikW.append
     for i in range(1, col_limits):
-        temp = np.interp(new_k, ori_k, ori_data[:, i])  # 首先根据用户需求对特定的k区间进行一维插值
-        adp(np.interp(polished_k, new_k, temp, left=0.0, right=0.0))  # 首尾补零
+        temp = ori_data[:, i] * window
+        adp(np.interp(polished_k, ori_k, temp, left=0.0, right=0.0))  # 首尾补零同时插值
     for i in range(len(new_chikW)):
         final_data = np.column_stack((final_data, new_chikW[i]))
     np.savetxt(path.TempPath.get('kW_for_WT'), final_data, fmt='%f', delimiter=" ")
@@ -120,34 +117,29 @@ def mwConstruct(mw_type: str):
     wavelet_center = (para.Parameters.bmin + para.Parameters.bmax) / 2  # 为了能让小波基的中心与信号中心对齐，设定小波基的中心为信号区间中心
     # 这里构建的小波基为小波的复共轭（为了方便小波变换的运算），同时还获得了能量归一化系数和小波基的FFT结果
     if mw_type == "cauchy":
-        wavelet_base = [[waveletMethod.cauchyC(r, wavelet_center, para.Parameters.n, k).conjugate() for k in k_input]
-                        for r in
-                        r_input]
-        energy_coef = [waveletMethod.energyCoef(r, para.Parameters.n) for r in r_input]
-        fft_freq, fft_amp, wavelet_coef = waveletMethod.fftWavelet(
-            [waveletMethod.cauchyC((para.Parameters.n / 2), wavelet_center, para.Parameters.n, k) for k in k_input],
-            k_input)
+        wavelet_base = np.array([[waveletMethod.cauchyC(r, wavelet_center, para.Parameters.n, k).conjugate()
+                                  for k in k_input] for r in r_input])
+        energy_coef = np.array([waveletMethod.energyCoef(r, para.Parameters.n) for r in r_input])
+        wavelet_coef = waveletMethod.fftWavelet(
+            [waveletMethod.cauchyC((para.Parameters.n / 2), wavelet_center, para.Parameters.n, k)
+             for k in k_input], k_input)
     else:
         # 默认morlet小波
-        wavelet_base = [
-            [waveletMethod.morletC(r, wavelet_center, para.Parameters.sigma, para.Parameters.eta, k) for k in
-             k_input] for r in r_input]
-        energy_coef = [waveletMethod.energyCoef(r, para.Parameters.eta) for r in r_input]
-        fft_freq, fft_amp, wavelet_coef = waveletMethod.fftWavelet(
+        wavelet_base = np.array(
+            [[waveletMethod.morletC(r, wavelet_center, para.Parameters.sigma, para.Parameters.eta, k)
+              for k in k_input] for r in r_input])
+        energy_coef = np.array([waveletMethod.energyCoef(r, para.Parameters.eta) for r in r_input])
+        wavelet_coef = waveletMethod.fftWavelet(
             [waveletMethod.morletC((para.Parameters.eta * para.Parameters.sigma / 2), wavelet_center,
-                                   para.Parameters.sigma,
-                                   para.Parameters.eta, k) for k in k_input], k_input)
+                                   para.Parameters.sigma, para.Parameters.eta, k) for k in k_input], k_input)
     mw_data = k_input
-    para.Parameters.wavelet_coef = wavelet_coef
-    wavelet_fft = np.column_stack((fft_freq, fft_amp))
+    para.Parameters.wavelet_coef = wavelet_coef  # 记录小波的归一化系数
     for i in range(len(wavelet_base)):
         mw_data = np.column_stack((mw_data, wavelet_base[i]))
     np.savetxt(path.TempPath.get('mother_wavelet'), mw_data, fmt='%f', delimiter=" ")
     np.savetxt(path.TempPath.get('energy_coef'), energy_coef, fmt="%f", delimiter=" ")
-    np.savetxt(path.TempPath.get('wavelet_fft'), wavelet_fft, fmt="%f", delimiter=" ")
     print("Note: waveletBases_temp file created.")
     print("Note: energy_temp file created.")
-    print("Note: fft_wavelet file created.")
 
 
 # --------- 执行小波变换并产生txt临时文件 ---------

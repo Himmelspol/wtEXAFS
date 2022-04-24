@@ -1,12 +1,11 @@
 # -*- coding:utf-8 -*-
 
+import numpy as np
 import os
 import tkinter  # 导入相关窗体模块
 import tkinter.messagebox
 from shutil import copy
 from tkinter.ttk import Notebook
-
-import numpy as np
 
 # ------------ 自定义模块 ------------
 from wtEXAFS import fileOper, para, path, showData, subWindow, tools
@@ -142,6 +141,8 @@ class MainWindow:
             para.Parameters.kmin = tools.colFirstLastInter(kW_path)[0]
             para.Parameters.kmax = tools.colFirstLastInter(kW_path)[1]
             para.Parameters.dk = tools.colFirstLastInter(kW_path)[2]
+            para.Parameters.dR = round(np.pi / (2 * (20 + (para.Parameters.kmax - para.Parameters.kmin))), 3) + 0.001
+            # Nyquist frequency according to k-range, dR = pi/(2*k-range)
             para.Parameters.bmin = para.Parameters.kmin
             para.Parameters.bmax = para.Parameters.kmax
             para.Parameters.db = para.Parameters.dk
@@ -271,13 +272,18 @@ class MainWindow:
             deltak = self.dk.get()
             rmin = self.Rmin.get()
             rmax = self.Rmax.get()
-            deltar = self.dR.get()
+            deltar = round(np.pi / (2 * (20 + (kmax - kmin))), 3) + 0.001
             sigma = self.sigma.get()
             eta = self.eta.get()
             norder = self.n.get()
             # --------- 判断输入是否合理 ---------
             if tools.testKRInput(kmin, kmax, deltak, rmin, rmax, deltar, sigma, eta, norder):
                 print("5. Parameters accepted!")
+                # --------- 重新刷新dR ---------
+                self.dR_input.config(state="normal")
+                self.dR_input.delete(0, "end")
+                self.dR_input.insert("end", para.Parameters.dR)
+                self.dR_input.config(state="readonly")
                 # --------- 保存config临时文件 ---------
                 fileOper.saveConfig()
                 # --------- 创建用户定义的临时数据集 ---------
@@ -437,9 +443,9 @@ class MainWindow:
     def showPara(self):
         # --------- 展示参数 ---------
         self.kmin_input.delete(0, "end")
-        self.kmin_input.insert("end", para.Parameters.bmin)
+        self.kmin_input.insert("end", para.Parameters.bmin + 2)
         self.kmax_input.delete(0, "end")
-        self.kmax_input.insert("end", para.Parameters.bmax)
+        self.kmax_input.insert("end", para.Parameters.bmax - 0.5)
         self.dk_input.delete(0, "end")
         self.dk_input.insert("end", para.Parameters.db)
         self.Rmin_input.delete(0, "end")
@@ -448,6 +454,7 @@ class MainWindow:
         self.Rmax_input.insert("end", para.Parameters.Rmax)
         self.dR_input.delete(0, "end")
         self.dR_input.insert("end", para.Parameters.dR)
+        self.dR_input.config(state="readonly")
         self.sigma_input.delete(0, "end")
         self.sigma_input.insert("end", para.Parameters.sigma)
         self.eta_input.delete(0, "end")

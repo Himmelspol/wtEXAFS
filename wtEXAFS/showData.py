@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
 
-import tkinter.messagebox
-import tkinter.simpledialog
-
 import matplotlib.pyplot as plt
 import numpy as np
+import tkinter.messagebox
+import tkinter.simpledialog
 from numpy import array
 from numpy import loadtxt
 
@@ -47,29 +46,31 @@ def showKWeighted():
 # --------- 小波基的展示 ---------
 def showMotherWavelet():
     MW_data = loadtxt(path.TempPath.get('mother_wavelet'), skiprows=0, dtype=complex)
-    r_input = valueList("R").round(2)
+    data_r = valueList("R").round(3)
+    data_rmin = data_r[0]
+    data_rmax = data_r[-1]
+    data_index = len(MW_data[0]) - 1
     plt.close(2)
     fig_MW = plt.figure(2)
     fig_MW.canvas.set_window_title('Plot of mother wavelet')
     if tkinter.messagebox.showinfo(title="Tips",
                                    message="The user can enter different R to show different scaled wavelet"):
         input_r = tkinter.simpledialog.askfloat("Choose the R you want to show!",
-                                                "Please select an R from " + str(para.Parameters.Rmin) + " to " +
-                                                str(para.Parameters.Rmax) + " with dR = " + str(para.Parameters.dR))
-        input_index = np.where(r_input == input_r)
-        if np.size(input_index) == 0:
-            tkinter.messagebox.showinfo(title="Error",
-                                        message="Out of range! Please enter again!")
-        else:
+                                                "Please select an R from " + str(data_rmin) + " to " + str(data_rmax))
+        input_index = int((input_r - data_rmin) / para.Parameters.dR)
+        if input_index in np.arange(data_index):
             k_show = array(MW_data[:, 0]).real
-            MW = array(MW_data[:, input_index[0] + 1]).real
-            plt.title("R selection: " + str(input_r))
+            MW = array(MW_data[:, input_index + 1]).real
+            plt.title("R selection: " + str(data_r[input_index]))
             plt.grid()
             plt.xlim(para.Parameters.bmin, para.Parameters.bmax)
             plt.plot(k_show, MW)
             plt.legend(['real part'], loc='upper left')
             print("Optional: Show the wavelet according to the parameters.")
             plt.show()
+        else:
+            tkinter.messagebox.showinfo(title="Error",
+                                        message="Out of range! Please enter again!")
 
 
 # --------- 小波结果的展示 ---------
@@ -108,9 +109,9 @@ def showWaveletResult():
     else:
         W_abs = array(wt_data[:, 2]).reshape(Y_shape, X_shape)
         plt.contourf(k_value, R_value, W_abs, 30, cmap='rainbow')
-    plt.grid()
     plt.xlabel("k (Å$^{-1}$)")
-    plt.ylabel("R + ΔR (Å)")
+    plt.ylabel("R (Å)")
+    plt.grid()
     plt.xlim(para.Parameters.bmin, para.Parameters.bmax)
     plt.colorbar(shrink=0.8)
     print("Optional: Show the results of wavelet transformation")
