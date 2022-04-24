@@ -46,10 +46,13 @@ MANIFEST
 /resources/energy_coef.txt
 /resources/mesh.txt
 /resources/model2.txt
+/resources/model3.txt
 /resources/temp_iWT.txt
 /resources/temp_k.txt
 /resources/temp_kW.txt
 /resources/temp_kWforWT.txt
+/resources/temp_R.txt
+/resources/temp_window.txt
 /resources/temp_MotherWavelet.txt
 /resources/temp_paras.txt
 /resources/temp_WT.txt

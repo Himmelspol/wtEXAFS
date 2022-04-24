@@ -254,16 +254,21 @@ class MainWindow:
         self.get_cPara.pack(side="right", padx=10, pady=5)
         # --------- 按钮组布局 ---------
         self.openMW_config = tkinter.Button(self.bottonB, text="Open config", width=15,
-                                            state="disabled", font=("Calibri", 11), command=self.reflashParaconfig)
+                                            state="disabled", font=("Calibri", 11),
+                                            command=self.reflashParaconfig)
         self.saveMW_config = tkinter.Button(self.bottonB, text="Save config", width=15,
                                             state="disabled", font=("Calibri", 11),
                                             command=self.saveParaconfig)
+        self.showkR = tkinter.Button(self.bottonB, text="Show k & R", width=15,
+                                     state="disabled", font=("Calibri", 11),
+                                     command=lambda: showData.showKR())
         self.showMW = tkinter.Button(self.bottonB, text="Show wavelet", width=15,
                                      state="disabled", font=("Calibri", 11),
                                      command=lambda: showData.showMotherWavelet())
-        self.openMW_config.pack(side="top", padx=10, pady=10)
-        self.saveMW_config.pack(side="top", padx=10, pady=10)
-        self.showMW.pack(side="top", padx=10, pady=10)
+        self.openMW_config.pack(side="top", padx=10, pady=5)
+        self.saveMW_config.pack(side="top", padx=10, pady=5)
+        self.showkR.pack(side="top", padx=10, pady=5)
+        self.showMW.pack(side="top", padx=10, pady=5)
 
         # --------- 小波配置的接受与临时保存 ---------
         def acceptMW(type_name: str):
@@ -372,6 +377,7 @@ class MainWindow:
             self.singleFile_menu.entryconfig("Save mother wavelet config", state="disabled")
             self.singleFile_menu.entryconfig("Save Wavelet Transformation result as txt", state="disabled")
             self.saveMW_config.config(state="disabled")
+            self.showkR.config(state="disabled")
             self.showMW.config(state="disabled")
             self.get_mPara.config(state="disabled")
             self.get_cPara.config(state="disabled")
@@ -387,6 +393,7 @@ class MainWindow:
             self.singleFile_menu.entryconfig("Save mother wavelet config", state="disabled")
             self.singleFile_menu.entryconfig("Save Wavelet Transformation result as txt", state="disabled")
             self.saveMW_config.config(state="disabled")
+            self.showkR.config(state="disabled")
             self.showMW.config(state="disabled")
             self.get_mPara.config(state="disabled")
             self.get_cPara.config(state="disabled")
@@ -414,6 +421,7 @@ class MainWindow:
             self.saveMW_config.config(state="normal")
             self.get_mPara.config(state="disabled")
             self.get_cPara.config(state="disabled")
+            self.showkR.config(state="normal")
             self.showMW.config(state="normal")
             self.wt_start.config(state="normal")
             self.wt_show.config(state="disabled")
@@ -445,7 +453,7 @@ class MainWindow:
         self.kmin_input.delete(0, "end")
         self.kmin_input.insert("end", para.Parameters.bmin + 2)
         self.kmax_input.delete(0, "end")
-        self.kmax_input.insert("end", para.Parameters.bmax - 0.5)
+        self.kmax_input.insert("end", para.Parameters.bmax - 1)
         self.dk_input.delete(0, "end")
         self.dk_input.insert("end", para.Parameters.db)
         self.Rmin_input.delete(0, "end")

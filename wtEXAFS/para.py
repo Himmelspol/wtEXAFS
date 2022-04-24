@@ -15,7 +15,6 @@ class Parameters:
     sigma = 1.0  # the half-width of Gaussian envelope for morlet wavelet
     eta = 10.0  # the frequency of the sine and cosine functions for morlet wavelet
     n = 100  # Cauchy wavelet parameter
-    wavelet_coef = 1
 
 
 # ----------- 参数字典 -----------

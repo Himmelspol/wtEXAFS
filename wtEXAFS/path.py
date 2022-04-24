@@ -1,9 +1,9 @@
 # -*- coding:utf-8 -*-
 
-import os
-import sys
 from os.path import exists
 
+import os
+import sys
 import win32con
 import win32ui
 
@@ -72,6 +72,8 @@ TempPath = {
     'col_selection': getResourcePath(os.path.join("resources", "col_selection.txt")),
     'para_profile': getResourcePath(os.path.join("resources", "temp_paras.txt")),
     'kW_for_WT': getResourcePath(os.path.join("resources", "temp_kWforWT.txt")),
+    'window': getResourcePath(os.path.join("resources", "temp_window.txt")),
+    'R': getResourcePath(os.path.join("resources", "temp_R.txt")),
     'mother_wavelet': getResourcePath(os.path.join("resources", "temp_MotherWavelet.txt")),
     'energy_coef': getResourcePath(os.path.join("resources", "energy_coef.txt")),
     'wavelet_fft': getResourcePath(os.path.join("resources", "wavelet_fft.txt")),

@@ -24,22 +24,65 @@ def showTextInBox(self, data_content):
 def showKWeighted():
     kW_data = loadtxt(path.TempPath.get('kW'), skiprows=0)
     legend_note = loadtxt(path.TempPath.get('col_selection'), dtype=str)
+    legend = legend_note.tolist()
     plt.close(1)
     fig_kw = plt.figure(1)
     fig_kw.canvas.set_window_title('Plot of k-weight chi(k)')
+    plt.grid()
+    plt.xlim((kW_data[:, 0][0], kW_data[:, 0][-1]))
+    plt.xlabel("k (Å$^{-1}$)")
+    plt.ylabel("k-weighted chi (k)")
     k = kW_data[:, 0]
     col_limits = kW_data.shape[1]
     for i in range(1, col_limits):
         temp_chik = kW_data[:, i]
-        plt.plot(k, temp_chik)
-    if col_limits == 2:
-        plt.legend([legend_note], loc='upper right', title="Column Selection")
-    else:
-        plt.legend(legend_note, loc='upper right', title="Column Selection")
+        plt.plot(k, temp_chik, linewidth=1.2, label=legend[i - 1])
+    plt.legend(loc='upper right', title="Column")
+    print("Optional: Show your k-weighted chi data.")
+    plt.show()
+
+
+# --------- k和R数据绘图 ---------
+def showKR():
+    # 读取需要作图的数据
+    kW_data = loadtxt(path.TempPath.get('kW_for_WT'), skiprows=0)
+    window_data = loadtxt(path.TempPath.get("window"), skiprows=0)
+    chiR_data = loadtxt(path.TempPath.get("R"), skiprows=0)
+    legend_note = loadtxt(path.TempPath.get('col_selection'), dtype=str)
+    legend = legend_note.tolist()
+    # 进入画图细节
+    plt.close(2)
+    fig_kw = plt.figure(2, figsize=(10, 4))
+    plt.subplots_adjust(left=0.1, bottom=0.12, right=0.96, top=0.90, wspace=0.18, hspace=None)
+    fig_kw.canvas.set_window_title('Plot of chi(k) and chi(R)')
+    # 第一个子图为k空间数据
+    plt.subplot(121)
     plt.grid()
+    plt.xlim((para.Parameters.kmin, para.Parameters.kmax))
     plt.xlabel("k (Å$^{-1}$)")
     plt.ylabel("k-weighted chi (k)")
+    k = kW_data[:, 0]
+    kcol_limits = kW_data.shape[1]
+    for i in range(1, kcol_limits):
+        temp_chik = kW_data[:, i]
+        plt.plot(k, temp_chik, linewidth=1.2, label=legend[i - 1])
+    plt.plot(window_data[:, 0], window_data[:, 1], label="window")  # 把窗函数画出来
+    plt.legend(loc='upper right', title="Column", fontsize=8)
     print("Optional: Show your k-weighted chi data.")
+
+    # 第二个子图为R空间数据
+    plt.subplot(122)
+    plt.grid()
+    plt.xlim((0, 6))
+    plt.xlabel("R (Å)")
+    plt.ylabel("mag|FT[chi(k)]|")
+    R = chiR_data[:, 0]
+    rcol_limits = chiR_data.shape[1]
+    for i in range(1, rcol_limits):
+        temp_chiR = chiR_data[:, i]
+        plt.plot(R, temp_chiR, linewidth=1.2, label=legend[i - 1])
+    plt.legend(loc='upper right', title="Column", fontsize=8)
+    print("Optional: Show your k-weighted chiR data.")
     plt.show()
 
 
@@ -50,8 +93,8 @@ def showMotherWavelet():
     data_rmin = data_r[0]
     data_rmax = data_r[-1]
     data_index = len(MW_data[0]) - 1
-    plt.close(2)
-    fig_MW = plt.figure(2)
+    plt.close(3)
+    fig_MW = plt.figure(3)
     fig_MW.canvas.set_window_title('Plot of mother wavelet')
     if tkinter.messagebox.showinfo(title="Tips",
                                    message="The user can enter different R to show different scaled wavelet"):
@@ -88,8 +131,8 @@ def showWaveletResult():
     k_value = array(wt_data[:, 0]).reshape(Y_shape, X_shape)
     R_value = array(wt_data[:, 1]).reshape(Y_shape, X_shape)
     # --------- 开始绘图 ---------
-    plt.close(3)
-    fig_WT = plt.figure(3)
+    plt.close(4)
+    fig_WT = plt.figure(4)
     fig_WT.canvas.set_window_title('Plot of mag|W(R,k)|')
     # --------- 判断是否是多列模式，如果是则跳出选择提示 ---------
     if cols > 3:
@@ -129,9 +172,13 @@ def showInverseWaveletResult():
     # --------- 获得k值（包括原始的和重构的） ---------
     orik = kW_data[:, 0]
     reconk = reconChi_data[:, 0]
-    plt.close(4)
-    fig_iWT = plt.figure(4)
+    plt.close(5)
+    fig_iWT = plt.figure(5)
     fig_iWT.canvas.set_window_title('Plot of inverse wavelet transformation')
+    plt.grid()
+    plt.xlim(para.Parameters.kmin, para.Parameters.kmax)
+    plt.xlabel("k (Å$^{-1}$)")
+    plt.ylabel("k-weighted chi (k)")
     if cols > 3:
         if tkinter.messagebox.showinfo(title="Tips",
                                        message="In multiple data mode, only one column of results would be displayed"):
@@ -153,10 +200,6 @@ def showInverseWaveletResult():
         temp_reconchik = reconChi_data[:, 1]
         plt.plot(orik, temp_orichik)
         plt.plot(reconk, temp_reconchik)
-    plt.grid()
-    plt.xlim(para.Parameters.bmin, para.Parameters.bmax)
-    plt.xlabel("k (Å$^{-1}$)")
-    plt.ylabel("reconstructed chi (k)")
     plt.legend(["Original data", "Reconstructed data"], loc='upper right')
     print("Optional: Show reconstructed chi data.")
     plt.show()
@@ -167,3 +210,4 @@ def closeFig():
     plt.close(2)
     plt.close(3)
     plt.close(4)
+    plt.close(5)
