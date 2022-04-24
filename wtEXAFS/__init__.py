@@ -3,7 +3,7 @@
 """
 @author Zhihang Ye
 @contact: yezhihang@live.com
-@date 2022/04/02
+@date 2022/04/24
 ------------------ Description -----------------------
 This is a python GUI of wavelet transformation for EXAFS data.
 And The python version used is 3.7.
@@ -26,7 +26,7 @@ Because the author is a beginner to Python,
 there may be many irregularities and ambiguities in the code.:)
 """
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 __author__ = 'Zhihang Ye'
 __email__ = 'yezhihang@live.com'
 
