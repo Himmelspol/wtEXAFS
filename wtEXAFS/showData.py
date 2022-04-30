@@ -147,14 +147,15 @@ def showWaveletResult():
                 tkinter.messagebox.showinfo(title="Error", message="Out of range! Please try again!")
             else:
                 W_abs = array(wt_data[:, input_index + 2]).reshape(Y_shape, X_shape)
+                plt.contour(k_value, R_value, W_abs, 6, colors="w", linewidths=0.8)
                 plt.contourf(k_value, R_value, W_abs, 30, cmap='rainbow')
                 plt.title("Column selection: " + str(input_column))
     else:
         W_abs = array(wt_data[:, 2]).reshape(Y_shape, X_shape)
-        plt.contourf(k_value, R_value, W_abs, 30, cmap='rainbow')
+        plt.contour(k_value, R_value, W_abs, 6, colors="w", linewidths=0.8)
+        plt.contourf(k_value, R_value, W_abs, 24, cmap='rainbow')
     plt.xlabel("k (Å$^{-1}$)")
     plt.ylabel("R (Å)")
-    plt.grid()
     plt.xlim(para.Parameters.bmin, para.Parameters.bmax)
     plt.colorbar(shrink=0.8)
     print("Optional: Show the results of wavelet transformation")

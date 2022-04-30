@@ -84,7 +84,7 @@ def sinbase(k_list):
     # 根据k序列的间隔和长度构建r序列，注意在EXAFS中，omega(k)=2*k*(R + phase_shift)，对于k的实际频率为2R，但为了方便傅里叶变换后只显示为R，
     k_range = k_list[-1] - k_list[0]
     delta_k = k_list[1] - k_list[0]
-    r_range = np.pi / (2 * delta_k)
+    r_range = np.pi / delta_k
     delta_r = np.pi / (2 * k_range)
     r_list = np.arange(0, r_range, delta_r)
     # 构建用于傅里叶变换的核
@@ -149,5 +149,5 @@ def fftWavelet(wavelet, k_list):
     base = sinbase(k_list)[1]
     dk = k_list[1] - k_list[0]
     chiR = fFT(base, wavelet, dk)
-    wavelet_coef = np.sqrt(np.pi) * np.trapz(chiR)
+    wavelet_coef = np.sqrt(np.pi) * np.trapz(chiR) / 2
     return wavelet_coef

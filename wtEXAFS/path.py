@@ -19,7 +19,13 @@ def getResourcePath(relative_path):  # 实现当前路径的定位
 
 # ----------- 调用winAPI选择获得文件的路径 -----------
 def getPath(gettype: str):
-    API_flag = win32con.OFN_OVERWRITEPROMPT | win32con.OFN_FILEMUSTEXIST
+    ini_path = getResourcePath(os.path.join("resources", "father_path.txt"))
+    if exists(ini_path):
+        with open(ini_path, "r", encoding='utf-8') as f:
+            ini_dir = f.read()
+    else:
+        ini_dir = "C:"
+    API_flag = win32con.OFN_OVERWRITEPROMPT | win32con.OFN_PATHMUSTEXIST | win32con.OFN_FILEMUSTEXIST
     # --------- 指定获取的文件类型 ---------
     if gettype == "singleData":
         file_type = 'txt File(*.txt)|*.txt|' \
@@ -36,21 +42,30 @@ def getPath(gettype: str):
                     '|'
     dlg = win32ui.CreateFileDialog(1, None, None, API_flag, file_type)  # 指定为打开文件窗口
     dlg.SetOFNTitle("Open Data File")
-    dlg.SetOFNInitialDir("C:")
+    dlg.SetOFNInitialDir(ini_dir)
     if dlg.DoModal() != win32con.IDOK:
         raise KeyboardInterrupt("User cancelled the process")
     path = dlg.GetPathName()  # 获取文件的路径
+    father_path = os.path.dirname(path)
+    with open(ini_path, "w", encoding='utf-8') as f:
+        f.write(father_path)
     return path
 
 
 # ----------- 调用winAPI选择保存文件的路径 -----------
 def savePath(file_name: str):
-    API_flag = win32con.OFN_OVERWRITEPROMPT | win32con.OFN_FILEMUSTEXIST
+    ini_path = getResourcePath(os.path.join("resources", "father_path.txt"))
+    if exists(ini_path):
+        with open(ini_path, "r", encoding='utf-8') as f:
+            ini_dir = f.read()
+    else:
+        ini_dir = "C:"
+    API_flag = win32con.OFN_OVERWRITEPROMPT | win32con.OFN_PATHMUSTEXIST | win32con.OFN_FILEMUSTEXIST
     file_type = 'txt File(*.txt)|*.txt|' \
                 '|'
     dlg = win32ui.CreateFileDialog(0, None, file_name, API_flag, file_type)  # 指定为保存文件窗口
     dlg.SetOFNTitle("Save File As")
-    dlg.SetOFNInitialDir('C:')  # 默认打开的位置
+    dlg.SetOFNInitialDir(ini_dir)  # 默认打开的位置
     if dlg.DoModal() != win32con.IDOK:
         raise KeyboardInterrupt("User cancelled the process")
     path = dlg.GetPathName()  # 获取打开的路径

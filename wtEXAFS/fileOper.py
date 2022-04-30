@@ -154,6 +154,8 @@ def waveleTransformation():
     mw_data = np.loadtxt(path.TempPath.get('mother_wavelet'), skiprows=0, dtype=complex)
     # --------- 读入小波基对应的能量 ---------
     energy_coef = np.loadtxt(path.TempPath.get('energy_coef'), skiprows=0)
+    # --------- 读入选择的列 ---------
+    legend_note = np.loadtxt(path.TempPath.get('col_selection'), dtype=str)
     # --------- 获取多列文件的列限制 ---------
     col_limits = for_WT.shape[1]
     # --------- 获取k/R序列 ---------
@@ -180,7 +182,8 @@ def waveleTransformation():
         final_data_mag = np.column_stack((final_data_mag, w_mag[i]))
         final_data_complex = np.column_stack((final_data_complex, w_complex[i]))
     np.savetxt(path.TempPath.get('mesh_note'), mesh_kr, delimiter=" ")
-    np.savetxt(path.TempPath.get('WT'), final_data_mag, fmt='%f', delimiter=" ")
+    np.savetxt(path.TempPath.get('WT'), final_data_mag, fmt='%f', delimiter=" ", comments="#",
+               header=" k\tR\tColumn Selection = " + str(legend_note))
     np.savetxt(path.TempPath.get('WT_complex'), final_data_complex, fmt='%f', delimiter=" ")
     print("Note: mesh_temp file created.")
     print("Note: resultWT_temp file created.")
@@ -188,6 +191,8 @@ def waveleTransformation():
 
 # --------- 执行小波的逆变换并产生txt临时文件 ---------
 def inverseWaveleTransformation():
+    # --------- 读入选择的列 ---------
+    legend_note = np.loadtxt(path.TempPath.get('col_selection'), dtype=str)
     # --------- 读入矩阵变形参数 ---------
     mesh_note = np.loadtxt(path.TempPath.get('mesh_note'), skiprows=0)
     X_shape = int(mesh_note[0])
@@ -214,4 +219,5 @@ def inverseWaveleTransformation():
     final_data = k_input[data_index]
     for i in range(len(chi_recon)):
         final_data = np.column_stack((final_data, chi_recon[i][data_index]))
-    np.savetxt(path.TempPath.get('iWT'), final_data, fmt='%f', delimiter=" ")
+    np.savetxt(path.TempPath.get('iWT'), final_data, fmt='%f', delimiter=" ", comments="#",
+               header=" k\tColumn Selection = " + str(legend_note))
