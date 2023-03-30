@@ -134,12 +134,7 @@ See guide_for_wtEXAFS.pdf for more details.
 
 ## About author
 
-Hi everyone, I am a beginner of XAFS and Python. Under the guidance of Prof. Peng Liu, I first came into contact with
-EXAFS in 2019. Currently, I am a master's student at China University of Geosciences (Wuhan), majoring in Environmental
-Science and Engineering.
-
-I noticed that there are not many GUI for EXAFS wavelet transformation yet. Thus, with the purpose of learning, I wrote
-this GUI and hope it can help others :)
+Hi everyone, I am a beginner of XAFS and Python, and I noticed that there are not many GUI for EXAFS wavelet transformation yet. Thus, with the purpose of learning, I wrotethis GUI and hope it can help others :)
 
 EXAFS is a powerful technique for detecting the local structure of different materials. Actually, EXAFS is a composite
 signal of electron waves, which is well suited for analysis using wavelet transform. Although it is difficult to gain
