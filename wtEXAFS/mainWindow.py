@@ -451,9 +451,9 @@ class MainWindow:
     def showPara(self):
         # --------- 展示参数 ---------
         self.kmin_input.delete(0, "end")
-        self.kmin_input.insert("end", para.Parameters.bmin + 2)
+        self.kmin_input.insert("end", para.Parameters.bmin)
         self.kmax_input.delete(0, "end")
-        self.kmax_input.insert("end", para.Parameters.bmax - 1)
+        self.kmax_input.insert("end", para.Parameters.bmax)
         self.dk_input.delete(0, "end")
         self.dk_input.insert("end", para.Parameters.db)
         self.Rmin_input.delete(0, "end")

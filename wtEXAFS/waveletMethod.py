@@ -111,7 +111,7 @@ def cWT(wavelet, chi, energy_coef, dk: float):
     :param chi: 经过一维线性插值的chi序列，间距为dk
     :param dk: 数据间隔
     :param energy_coef: 能量的归一化常数
-    :return: 一维的小波变换结果，先是k变化，然后是r变化
+    :return: 一维的小波变换结果（分别是magnitude和complex number的形式），先是k变化，然后是r变化
     """
     w_abs = np.array([])
     w_complex = np.array([])
