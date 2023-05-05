@@ -89,7 +89,7 @@ def sinbase(k_list):
     r_list = np.arange(0, r_range, delta_r)
     # 构建用于傅里叶变换的核
     sinwave = np.array([[sinC(2 * k * r) for k in k_list] for r in r_list])
-    return r_list, sinwave
+    return r_list, sinwave.conj()
 
 
 # 执行傅里叶变换
@@ -145,7 +145,7 @@ def fftWavelet(wavelet, k_list):
     wavelet_coef = np.trapz(fft_amp) * (k_list[1] - k_list[0])
     return fft_freq, fft_amp, wavelet_coef
     """
-    wavelet = np.array(wavelet).real
+    wavelet = np.array(wavelet).imag
     base = sinbase(k_list)[1]
     dk = k_list[1] - k_list[0]
     chiR = fFT(base, wavelet, dk)

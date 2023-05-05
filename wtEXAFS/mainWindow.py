@@ -277,7 +277,8 @@ class MainWindow:
             deltak = self.dk.get()
             rmin = self.Rmin.get()
             rmax = self.Rmax.get()
-            deltar = round(np.pi / (2 * (20 + (kmax - kmin))), 3) + 0.001
+            # deltar = round(np.pi / (2 * (20 + (kmax - kmin))), 3) + 0.001
+            deltar = self.dR.get()
             sigma = self.sigma.get()
             eta = self.eta.get()
             norder = self.n.get()
@@ -288,7 +289,7 @@ class MainWindow:
                 self.dR_input.config(state="normal")
                 self.dR_input.delete(0, "end")
                 self.dR_input.insert("end", para.Parameters.dR)
-                self.dR_input.config(state="readonly")
+                self.dR_input.config(state="normal")
                 # --------- 保存config临时文件 ---------
                 fileOper.saveConfig()
                 # --------- 创建用户定义的临时数据集 ---------
@@ -462,7 +463,7 @@ class MainWindow:
         self.Rmax_input.insert("end", para.Parameters.Rmax)
         self.dR_input.delete(0, "end")
         self.dR_input.insert("end", para.Parameters.dR)
-        self.dR_input.config(state="readonly")
+        # self.dR_input.config(state="readonly")
         self.sigma_input.delete(0, "end")
         self.sigma_input.insert("end", para.Parameters.sigma)
         self.eta_input.delete(0, "end")
